@@ -1,3 +1,8 @@
+/*
+* 权限路由
+* author TanZongCong
+* 2018-8-9
+* */
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from '@/store';
