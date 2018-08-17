@@ -13,7 +13,8 @@ const vuexPersisted = new CreatePersistedState({
   storage: window.localStorage,
   // 选择要存储的变量
   reducer: state => ({
-    token: ''
+    token: state.token
+    // adminRouter: state.adminRouter
   })
 })
 

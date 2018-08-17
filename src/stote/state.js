@@ -1,5 +1,6 @@
 const state = {
-  token: ''
+  token: '',
+  adminRouter: []
 }
 
 export default state

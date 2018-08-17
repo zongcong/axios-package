@@ -1,0 +1,58 @@
+@import "common";
+
+.login {
+  .wh(100vw, 100vh);
+  background-color: rgba(0, 0, 0, 0.6);
+  .login-box {
+    .abs;
+    .ovh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: #fff;
+    border-radius: 3px;
+  }
+  .login-title {
+    line-height: 1;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  .login-form {
+    padding: 20px 20px;
+  }
+  .form-item {
+    + .form-item {
+      margin-top: 10px;
+    }
+    font-size: 0;
+    span {
+      width: 20%;
+      font-size: 14px;
+      .tr;
+      .dib;
+      .vm;
+    }
+    input {
+      .vm;
+      height: 30px;
+      width: 80%;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      border-radius: 2px;
+      padding-left: 10px;
+    }
+  }
+  .login-btn {
+    .tc;
+    margin-bottom: 20px;
+    button {
+      cursor: pointer;
+      line-height: 1;
+      .sc(15px, #fff);
+      padding: 10px 30px;
+      border-radius: 3px;
+      background-color: green;
+    }
+  }
+}
