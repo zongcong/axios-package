@@ -21,6 +21,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
+const Home = resolve => require.ensure([], () => resolve(require('@/components/adminHome')), 'home')
 
 export default {
   name: 'login',
@@ -34,10 +35,35 @@ export default {
       this.routerDate()
         .then(res => {
           const data = res
+          let sessionRouter = JSON.parse(window.sessionStorage.getItem('router'))
+          if (!sessionRouter) {
+            console.log(sessionRouter)
+            let newRouter = [
+              {
+                path: '/home',
+                name: 'home',
+                component: Home,
+                meta: {
+                  // 添加该字段，表示进入这个路由是需要登录的
+                  requireAdmin: true
+                },
+                children: []
+              }
+            ]
+            data.map(item => {
+              newRouter[0].children.push(
+                {
+                  path: '/home' + item.path,
+                  name: item.path,
+                  component: resolve => require.ensure([], () => resolve(require(`@/components/${item.routerFile}`)), 'login')
+                }
+              )
+            })
+            this.$router.addRoutes(newRouter)
+          }
           window.sessionStorage.router = JSON.stringify(data)
           this.setRouterList(data)
           this.setToken(1)
-          // this.$router.addRoutes(router)
           this.$router.push('/home')
         })
         .catch(err => {
@@ -48,13 +74,12 @@ export default {
       setRouterList: 'SET_ROUTER_LIST',
       setToken: 'SET_TOKEN'
     }),
-    routerDate () {
+    routerDate (params) {
       let routerList = [
         {path: '/one', routerFile: 'one'},
         {path: '/two', routerFile: 'two'},
         {path: '/three', routerFile: 'three'},
-        {path: '/four', routerFile: 'four'},
-        {path: '/home', routerFile: 'adminHome'}
+        {path: '/four', routerFile: 'four'}
       ]
       return new Promise((resolve, reject) => {
         resolve(routerList)
