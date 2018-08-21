@@ -8,7 +8,7 @@
     </div>
     <div class="right">
       <div class="top">
-        <button @click="$router.go(-1)">退出</button>
+        <button @click="out">退出</button>
       </div>
       <div class="router">
         <router-view/>
@@ -18,9 +18,24 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
+  methods: {
+    out () {
+      // 清空 vuex 的路由
+      this.setRouterList([])
+      // 设置token
+      this.setToken('')
+      // 删除 sessionStorage 路由
+      window.sessionStorage.removeItem('router')
+      this.$router.push('/login')
+    },
+    ...mapMutations({
+      setRouterList: 'SET_ROUTER_LIST',
+      setToken: 'SET_TOKEN'
+    })
+  },
   computed: {
     ...mapGetters([
       'adminRouter'

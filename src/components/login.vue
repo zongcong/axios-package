@@ -6,7 +6,7 @@
       </div>
       <div class="login-form">
         <div class="form-item">
-          <span>账号：</span><input type="text">
+          <span>账号：</span><input v-model.trim="adminUser" type="text">
         </div>
         <div class="form-item">
           <span>密码：</span><input type="text">
@@ -27,14 +27,19 @@ export default {
   name: 'login',
   data () {
     return {
-      adminRouter: []
+      adminRouter: [],
+      adminUser: ''
     }
   },
   methods: {
     login () {
-      this.routerDate()
+      this.routerDate(this.adminUser)
         .then(res => {
           const data = res
+          if (data.msg) {
+            alert(data.msg)
+            return
+          }
           let sessionRouter = JSON.parse(window.sessionStorage.getItem('router'))
           if (!sessionRouter) {
             console.log(sessionRouter)
@@ -75,12 +80,22 @@ export default {
       setToken: 'SET_TOKEN'
     }),
     routerDate (params) {
-      let routerList = [
-        {path: '/one', routerFile: 'one'},
-        {path: '/two', routerFile: 'two'},
-        {path: '/three', routerFile: 'three'},
-        {path: '/four', routerFile: 'four'}
-      ]
+      let routerList = []
+      if (params === 'admin') {
+        routerList = [
+          {path: '/one', routerFile: 'one'},
+          {path: '/two', routerFile: 'two'},
+          {path: '/three', routerFile: 'three'},
+          {path: '/four', routerFile: 'four'}
+        ]
+      } else if (params === 'userAdmin') {
+        routerList = [
+          {path: '/three', routerFile: 'three'},
+          {path: '/four', routerFile: 'four'}
+        ]
+      } else {
+        routerList = {msg: '请输入账号'}
+      }
       return new Promise((resolve, reject) => {
         resolve(routerList)
       })
