@@ -8,6 +8,7 @@ const Home = resolve => require.ensure([], () => resolve(require('@/components/a
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -36,10 +37,8 @@ function addRouter (to, from, next) {
   let token = stote.getters.token
   // 当 vuex 中存在路由时（为正常登陆存储），进入下一个路由
   if (routerList.length) {
-    console.log('a')
     next()
   } else {
-    console.log('b')
     // 当 vuex 中没有路由信息时，动态添加路由，并且提交 actions 存储路由
     let newRouter = [
       {
@@ -66,12 +65,12 @@ function addRouter (to, from, next) {
         )
       })
       router.addRoutes(newRouter)
-      // router.replace(from)
       // action 存储路由
       stote.dispatch('setNewRouter', sessionRouter)
         .then(res => {
-          // console.log(res)
           next({...to})
+          // 不会向 history 添加新记录，而是跟它的方法名一样 —— 替换掉当前的 history 记录, history 下才起作用
+          router.replace(to.path)
         })
       // console.log(newRouter)
     } else {
