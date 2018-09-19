@@ -2,8 +2,8 @@
 import axios from 'axios' // 引入axios
 import router from 'vue-router'
 import QS from 'qs' // 引入qs模块，用来序列化post类型的数据，后面会提到
-import store from '../stote'
-import * as types from '../stote/mutations-types'
+import store from '../store'
+import * as types from '../store/mutations-types'
 // vant的toast提示框组件，大家可根据自己的ui组件更改。
 // import { Toast } from 'vant';
 // 环境的切换
