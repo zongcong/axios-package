@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import stote from '../stote'
+import stote from '../store'
 import HelloWorld from '@/components/HelloWorld'
 const Login = resolve => require.ensure([], () => resolve(require('@/components/login')), 'login')
 const Home = resolve => require.ensure([], () => resolve(require('@/components/adminHome')), 'home')
